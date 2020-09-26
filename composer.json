@@ -1,0 +1,22 @@
+{
+    "name": "faxnegar/simotel-api",
+    "description": "Reservation system for Hospitality",
+    "require": {
+        "guzzlehttp/guzzle": "^7.1"
+    },
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Saeed Torabi",
+            "email": "saeedtrb@yahoo.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Simotel\\": "src/"
+        }
+    }
+}
