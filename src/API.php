@@ -37,6 +37,52 @@ class API
     }
 
     /**
+     * @param string $to
+     * @param string $trunkName
+     * @param string $file
+     * @param string $text
+     * @param string $description
+     * @param string $sender_id
+     * @return
+     */
+    public function addFax($to, $trunkName, $file, $description, $sender_id)
+    {
+        return $this->_call('GET', 'pbx/faxes/add', [
+            'to' => $to,
+            'trunk_name' => $trunkName,
+            'file' => $file,
+            'description' => $description,
+            'sender_id' => $sender_id
+        ]);
+    }
+
+    /**
+     * @param string $methodName
+     * @return string
+     */
+    public function uploadFaxFile($blob, $filename)
+    {
+        try {
+            $url = $this->getPath('/pbx/faxes/upload');
+            $this->response = $this->client->request('POST', $url, [
+                'auth'      => [ $this->username, $this->password ],
+                'multipart' => [
+                    [
+                        'name'     => 'file',
+                        'contents' => $blob,
+                        'filename' => $filename
+                    ]
+                ]
+            ]);
+        } catch (RequestException $e) {
+            $this->response = $e->getResponse();
+            throw new \RuntimeException($e->getMessage(), $e->getCode());
+        }
+
+        return json_decode($this->response->getBody());
+    }
+
+    /**
      * @param string $methodName
      * @return string
      */
@@ -77,25 +123,5 @@ class API
         return json_decode($this->response->getBody());
     }
 
-    /**
-     * @param string $to
-     * @param string $trunkName
-     * @param string $file
-     * @param string $text
-     * @param string $description
-     * @param string $sender_id
-     * @return
-     */
-    public function addFax($to, $trunkName, $file, $text, $description, $sender_id)
-    {
-        return $this->_call('GET', 'pbx/faxes/add', [
-            'to' => $to,
-            'trunk_name' => $trunkName,
-            'file' => $file,
-            'text' => $text,
-            'description' => $description,
-            'sender_id' => $sender_id
-        ]);
-    }
 
 }
