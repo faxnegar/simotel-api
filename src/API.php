@@ -55,7 +55,22 @@ class API
             'sender_id' => $sender_id
         ]);
     }
-
+	/**
+     * @param array $conditions
+     * @param bool $alike
+     * @param array $date_range
+     * @param array $pagination
+     * @return data
+     */
+    public function searchFax($conditions,$alike,$date_range,$pagination)
+    {
+        return $this->_call('GET', 'pbx/faxes/search', [
+            'conditions' => json_encode($conditions),
+            'alike' => $alike,
+            'date_range' => json_encode($date_range),
+            'pagination' => json_encode($pagination)
+        ]);
+    }
     /**
      * @param string $methodName
      * @return string
