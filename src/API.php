@@ -4,6 +4,7 @@ namespace Simotel;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\ResponseInterface;
 
 class API
 {
@@ -97,7 +98,19 @@ class API
 
         return json_decode($this->response->getBody());
     }
+    /**
+     * @param string $methodName
+     * @return ResponseInterface
+     * @throws GuzzleException
+     */
+    public function downloadFax($faxId)
+    {
+        $url = $this->getPath('/pbx/faxes/download');
 
+        return $this->client->request('GET', $url . '?id=' . $faxId, [
+            'auth'      => [ $this->username, $this->password ]
+        ]);
+    }
     /**
      * @param string $methodName
      * @return string
