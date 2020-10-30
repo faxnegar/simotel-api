@@ -45,10 +45,11 @@ class API
      * @param string $sender_id
      * @return
      */
-    public function addFax($to, $trunkName, $file, $description, $sender_id)
+    public function addFax($to, $ext, $trunkName, $file, $description, $sender_id)
     {
         return $this->_call('GET', 'pbx/faxes/add', [
             'to' => $to,
+            'ext' => $ext,
             'trunk_name' => $trunkName,
             'file' => $file,
             'description' => $description,
